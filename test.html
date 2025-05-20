@@ -1,26 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Test Sheet Update</title>
+  <title>Test Increment Purchased</title>
 </head>
 <body>
-  <h2>Increment Purchased Count by Item ID</h2>
+  <h2>Increment Purchased Count</h2>
 
-  <button onclick="updateSheet(1)">Increment Item 1</button>
-  <button onclick="updateSheet(2)">Increment Item 2</button>
-  <button onclick="updateSheet(3)">Increment Item 3</button>
-  <button onclick="updateSheet(999)">Increment Item 999 (likely invalid)</button>
+  <button onclick="updatePurchased(1)">Increment Item 1</button>
+  <button onclick="updatePurchased(2)">Increment Item 2</button>
+  <button onclick="updatePurchased(3)">Increment Item 3</button>
+  <button onclick="updatePurchased(999)">Increment Item 999 (likely invalid)</button>
 
   <script>
-    function updateSheet(itemId) {
-      fetch('https://script.google.com/macros/s/AKfycbyBG4ROOZ6M28fILsq9f0i3f_9wRtv5zOGLFF4DwcUhp_Qu4pEnC5KGFAoc2SstDcRYUA/exec', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ itemId: itemId })
+    function updatePurchased(itemId) {
+      const url = `https://script.google.com/macros/s/AKfycbyBG4ROOZ6M28fILsq9f0i3f_9wRtv5zOGLFF4DwcUhp_Qu4pEnC5KGFAoc2SstDcRYUA/exec/exec?itemId=${itemId}`;
+
+      fetch(url, {
+        method: 'GET',
       })
-      .then(response => response.json())
+      .then(res => res.json())
       .then(data => {
         console.log(data);
         alert('Response: ' + data.message);
