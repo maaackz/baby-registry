@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Sheet Update</title>
+</head>
+<body>
+  <button onclick="updateSheet()">Update Sheet</button>
+
+  <script>
+    function updateSheet() {
+      fetch('https://script.google.com/macros/s/AKfycbw4Vz9Ee_Cil_THcH3h5cdQsL8lj6r1KxdgwFQB0KUe/dev', {
+        method: 'POST'
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        alert('Response: ' + data.message);
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Error: ' + err.message);
+      });
+    }
+  </script>
+</body>
+</html>
