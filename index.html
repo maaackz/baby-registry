@@ -8,21 +8,33 @@
 <style>
   /* Recently Purchased Hotbar */
   .recently-purchased-hotbar {
-    position: fixed;
-    top: 1rem;
-    right: 0.5vw;
-    background: transparent;  /* no background */
-    border: none;             /* no border */
-    padding: 0;               /* no padding */
-    width: 25vw;              /* auto width to fit content */
-    max-height: 80vh;
-    overflow-y: auto;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    align-items: end;
-    gap: 0.5rem;
-  }
+  position: fixed;
+  top: 1rem;
+  right: 0.5vw;
+  background: transparent;
+  border: none;
+  padding: 0;
+  width: clamp(180px, 25vw, 300px); /* responsive width */
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  white-space: nowrap; /* prevents header text from wrapping */
+}
+
+.recently-purchased-hotbar h2 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0;
+  padding: 0 0.5rem;
+  white-space: nowrap; /* prevent wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 
   #recentList {
     list-style: none;
