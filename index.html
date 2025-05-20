@@ -115,6 +115,23 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+  .product-progress {
+  width: 100%;
+  height: 8px;
+  background-color: #eee;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 0rem;
+  margin-bottom: 1rem; /* <-- Add this line */
+}
+
+.product-progress-bar {
+  height: 100%;
+  background-color: #4caf50;
+  transition: width 0.3s ease;
+}
+
 </style>
 </head>
 <body>
@@ -226,25 +243,31 @@
   }
 
   function renderItemCard(item) {
-    const purchased = Number(item.Purchased);
-    const needed = Number(item.Needed);
-    const remaining = Math.max(needed - purchased, 0);
-    const disabled = purchased >= needed ? "purchased" : "";
+  const purchased = Number(item.Purchased);
+  const needed = Number(item.Needed);
+  const remaining = Math.max(needed - purchased, 0);
+  const disabled = purchased >= needed ? "purchased" : "";
 
-    return `
-      <div class="product-card ${disabled}" data-id="${item.ID}">
-        <div class="product-image">
-          <img src="${item.Image || 'images/placeholder.jpg'}" alt="${item.Name}" />
-        </div>
-        <button class="buy-button" title="Buy this item" ${disabled ? "disabled" : ""}>Buy</button>
-        <div class="product-content">
-          <h3 class="product-title">${item.Name}</h3>
-          <p class="product-quantity">Need: ${remaining}</p>
-          <a href="${item.Link}" class="shop-button" target="_blank">Shop Now</a>
-        </div>
+  const percent = needed > 0 ? Math.min((purchased / needed) * 100, 100) : 0;
+
+  return `
+    <div class="product-card ${disabled}" data-id="${item.ID}">
+      <div class="product-image">
+        <img src="${item.Image || 'images/placeholder.jpg'}" alt="${item.Name}" />
       </div>
-    `;
-  }
+      <button class="buy-button" title="Buy this item" ${disabled ? "disabled" : ""}>Buy</button>
+      <div class="product-content">
+        <h3 class="product-title">${item.Name}</h3>
+        <p class="product-quantity">Need: ${remaining}</p>
+        <div class="product-progress" aria-label="Progress for ${item.Name}">
+          <div class="product-progress-bar" style="width: ${percent}%"></div>
+        </div>
+        <a href="${item.Link}" class="shop-button" target="_blank">Shop Now</a>
+      </div>
+    </div>
+  `;
+}
+
 
   async function initialize() {
     const grid = document.querySelector(".products-grid");
