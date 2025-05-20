@@ -14,9 +14,19 @@
     font-family: "Quicksand", sans-serif;
     letter-spacing: -0.05vw;
 }
-* {
-    transition: all 0.3s ease-in-out;
+
+  .hidden {
+    display: none;
   }
+  
+
+  .modal-button.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+    display: none;
+  }
+  
   
   img {
     transition: transform 0.3s ease;

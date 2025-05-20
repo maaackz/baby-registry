@@ -52,7 +52,7 @@
 <div class="modal-overlay" id="modalOverlay" style="display:none;">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <h2 id="modalTitle">Confirm Purchase</h2>
-    <p>Are you sure you want to mark this item as purchased?</p>
+    <p id="confirmation-msg">Are you sure you want to mark this item as purchased?</p>
     <div class="modal-buttons">
       <button class="modal-button yes" id="confirmYes">Yes</button>
       <button class="modal-button no" id="confirmNo">No</button>
@@ -67,6 +67,8 @@
 
 <script>
   const modalOverlay = document.getElementById("modalOverlay");
+  const modalTitle = document.getElementById("modalTitle")
+  const confirmationMsg = document.getElementById("confirmation-msg")
   const confirmYes = document.getElementById("confirmYes");
   const confirmNo = document.getElementById("confirmNo");
   const recentList = document.getElementById("recentList");
@@ -86,8 +88,14 @@
     loadingOverlay.classList.remove("active");
   }
 
-  async function fetchItems() {
-    showLoading();
+  async function fetchItems(showLoad) {
+    if (showLoad == true){
+        showLoading();
+
+    } else {
+        hideLoading();
+    }
+    
     try {
       const res = await fetch(baseUrl);
       const data = await res.json();
@@ -156,9 +164,9 @@
 }
 
 
-  async function initialize() {
+  async function initialize(showLoad) {
     const grid = document.querySelector(".products-grid");
-    const items = await fetchItems();
+    const items = await fetchItems(showLoad);
 
     if (!items.length) {
       grid.innerHTML = "<p>No items found.</p>";
@@ -227,7 +235,7 @@
 
         if (result && result.status === "success") {
           removeFromRecentlyPurchased(id);
-          await initialize();
+          await initialize(true);
         } else {
           alert(result?.message || "Could not undo purchase. Try again later.");
         }
@@ -238,29 +246,64 @@
   // Confirm modal button handlers
 
   confirmYes.addEventListener("click", async () => {
-    if (!currentCard) return;
+  if (!currentCard) return;
 
-    confirmYes.disabled = true;
+  // Save original content
+  const originalTitle = modalTitle.textContent;
+  const originalMsg = confirmationMsg.textContent;
+  const originalYes = confirmYes.textContent;
+  const originalNo = confirmNo.textContent;
 
-    const id = currentCard.dataset.id;
-    const result = await incrementPurchased(id);
+  // Disable and visually gray out the buttons
+  confirmYes.disabled = true;
+  confirmNo.disabled = true;
+  confirmYes.classList.add("disabled");
+  confirmNo.classList.add("disabled");
 
-    if (result && result.status === "success") {
-      // Expecting updated item in result.item, fallback to current card data
-      addToRecentlyPurchased(result.item || {
-        ID: id,
-        Name: currentCard.querySelector(".product-title").textContent,
-        Image: currentCard.querySelector("img")?.src || 'images/placeholder.jpg'
-      });
-      await initialize();
-    } else {
-      alert(result?.message || "Could not update purchase. Try again later.");
-    }
+  // Update modal message and button text
+  modalTitle.textContent = "Confirming purchase";
+  confirmationMsg.textContent = "Please wait...";
+  confirmYes.textContent = "Processing...";
+  confirmNo.textContent = "";
 
-    confirmYes.disabled = false;
-    modalOverlay.style.display = "none";
-    currentCard = null;
-  });
+  const id = currentCard.dataset.id;
+  const result = await incrementPurchased(id);
+
+  if (result && result.status === "success") {
+    addToRecentlyPurchased(result.item || {
+      ID: id,
+      Name: currentCard.querySelector(".product-title").textContent,
+      Image: currentCard.querySelector("img")?.src || 'images/placeholder.jpg'
+    });
+    await initialize(true);
+  } else {
+    alert(result?.message || "Could not update purchase. Try again later.");
+  }
+
+  
+  // Restore modal to original state
+  // Show "Thank you!" before closing modal
+confirmationMsg.textContent = "Thank you!";
+modalTitle.textContent = "Success!";
+confirmYes.textContent = "";
+confirmNo.textContent = "";
+
+setTimeout(() => {
+  // Restore modal to original state
+  confirmationMsg.textContent = originalMsg;
+  modalTitle.textContent = originalTitle;
+  confirmYes.textContent = originalYes;
+  confirmNo.textContent = originalNo;
+  confirmYes.disabled = false;
+  confirmNo.disabled = false;
+  confirmYes.classList.remove("disabled");
+  confirmNo.classList.remove("disabled");
+
+  modalOverlay.style.display = "none";
+  currentCard = null;
+}, 2000); // delay in milliseconds
+});
+
 
   confirmNo.addEventListener("click", () => {
     modalOverlay.style.display = "none";
@@ -274,7 +317,7 @@
     }
   });
 
-  document.addEventListener("DOMContentLoaded", initialize);
+  document.addEventListener("DOMContentLoaded", initialize(true));
 </script>
 
 <script>
@@ -298,6 +341,11 @@
                 });
             });
         });
+        // Refresh data every 60 seconds (60000 milliseconds)
+setInterval(() => {
+  initialize(false);
+}, 60000);
+
     </script>
     
 </body>
