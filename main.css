@@ -286,3 +286,36 @@ footer {
 .modal-button.no:hover {
     background-color: #c0392b;
 }
+
+.recently-bought {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    max-width: 300px;
+    background: #f0f0f0;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    z-index: 9999;
+  }
+  .recent-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+  }
+  .recent-item span {
+    flex-grow: 1;
+  }
+  .recent-item button {
+    margin-left: 0.5rem;
+    cursor: pointer;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 3px;
+  }
+  

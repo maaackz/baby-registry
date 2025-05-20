@@ -1,266 +1,305 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Zhanin's Gift Registry</title>
-    <link rel="stylesheet" href="main.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Zhanin's Gift Registry</title>
+<link rel="stylesheet" href="main.css" />
+<style>
+  /* Recently Purchased Hotbar */
+  .recently-purchased-hotbar {
+  position: fixed;
+  top: 1rem;
+  right: 0.5vw;
+  background: transparent;  /* no background */
+  border: none;             /* no border */
+  padding: 0;               /* no padding */
+  width: 25vw;              /* auto width to fit content */
+  max-height: 80vh;
+  overflow-y: auto;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: 0.5rem;
+}
+
+#recentList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#recentList li {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  cursor: default;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.15); /* subtle drop shadow */
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#recentList li img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+}
+
+#recentList li button.decrement-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(0,0,0,0.6);
+  border: none;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 16px;
+  line-height: 20px;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
+#recentList li button.decrement-btn:hover {
+  opacity: 1;
+}
+
+</style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Zhanin's Gift Registry</h1>
-            <p class="subtitle">Help us welcome our little one with these special gifts</p>
-            <div class="header-decoration">
-                <span class="decoration-item">👶</span>
-                <span class="decoration-item">🍼</span>
-                <span class="decoration-item">🧸</span>
-                <span class="decoration-item">👶</span>
-                <span class="decoration-item">🍼</span>
-            </div>
-        </header>
-
-        <div class="products-grid">
-            <!-- Example product card -->
-            <div class="product-card" data-id="1">
-                <div class="product-image">
-                    <img src="images/bb1.jpg" alt="Baby Bottle" />
-                </div>
-                <button class="buy-button" title="Buy this item">Buy</button>
-                <div class="product-content">
-                    <h3 class="product-title">Baby Bottle</h3>
-                    <p class="product-quantity">Need: 1</p>
-                    <a href="https://s.shopee.ph/AUhEEBtz7c" class="shop-button" target="_blank">Shop Now</a>
-                </div>
-            </div>
-            <!-- Repeat product cards similarly, add buy-button to all -->
-            <!-- Skipping repeating all for brevity, but you would add the <button class="buy-button">Buy</button> inside each .product-card -->
-            <!-- I'll add for all cards in the final script below -->
-
-            <!-- Product 2 -->
-            <div class="product-card" data-id="2">
-                <div class="product-image">
-                    <img src="images/baby2.webp" alt="Baby Bottle" />
-                </div>
-                <button class="buy-button" title="Buy this item">Buy</button>
-                <div class="product-content">
-                    <h3 class="product-title">Baby Bottle</h3>
-                    <p class="product-quantity">Need: 1</p>
-                    <a href="https://s.shopee.ph/7KkCSYsFv8" class="shop-button" target="_blank">Shop Now</a>
-                </div>
-            </div>
-
-            <!-- Product 3 -->
-            <div class="product-card" data-id="3">
-                <div class="product-image">
-                    <img src="images/chupon.webp" alt="Baby Bottle Set" />
-                </div>
-                <button class="buy-button" title="Buy this item">Buy</button>
-                <div class="product-content">
-                    <h3 class="product-title">Baby Bottle Set</h3>
-                    <p class="product-quantity">Need:1</p>
-                    <a href="https://s.shopee.ph/hBFZTYq3P" class="shop-button" target="_blank">Shop Now</a>
-                    </div>
-                    </div>
-        <!-- Product 4 -->
-        <div class="product-card" data-id="4">
-            <div class="product-image">
-                <img src="images/biberon.webp" alt="Baby Bottle" />
-            </div>
-            <button class="buy-button" title="Buy this item">Buy</button>
-            <div class="product-content">
-                <h3 class="product-title">Baby Bottle</h3>
-                <p class="product-quantity">Need: 1</p>
-                <a href="https://s.shopee.ph/d3V4Xgsvh" class="shop-button" target="_blank">Shop Now</a>
-            </div>
-        </div>
-
-        <!-- Product 5 -->
-        <div class="product-card" data-id="5">
-            <div class="product-image">
-                <img src="images/bibs.webp" alt="Bibs" />
-            </div>
-            <button class="buy-button" title="Buy this item">Buy</button>
-            <div class="product-content">
-                <h3 class="product-title">Bibs</h3>
-                <p class="product-quantity">Need: 1</p>
-                <a href="https://s.shopee.ph/HCs1OXLUGf" class="shop-button" target="_blank">Shop Now</a>
-            </div>
-        </div>
-
-        <!-- Product 6 -->
-        <div class="product-card" data-id="6">
-            <div class="product-image">
-                <img src="images/bibs2.webp" alt="Bibs" />
-            </div>
-            <button class="buy-button" title="Buy this item">Buy</button>
-            <div class="product-content">
-                <h3 class="product-title">Bibs</h3>
-                <p class="product-quantity">Need: 1</p>
-                <a href="https://s.shopee.ph/IpCo1J2fQ" class="shop-button" target="_blank">Shop Now</a>
-            </div>
-        </div>
-
-        <!-- Product 7 -->
-        <div class="product-card" data-id="7">
-            <div class="product-image">
-                <img src="images/bibs3.webp" alt="Bibs" />
-            </div>
-            <button class="buy-button" title="Buy this item">Buy</button>
-            <div class="product-content">
-                <h3 class="product-title">Bibs</h3>
-                <p class="product-quantity">Need: 1</p>
-                <a href="https://s.shopee.ph/AvGZxOJ5Qx" class="shop-button" target="_blank">Shop Now</a>
-            </div>
-        </div>
-
-        <!-- Product 8 -->
-        <div class="product-card" data-id="8">
-            <div class="product-image">
-                <img src="images/bibs4.webp" alt="Bibs" />
-            </div>
-            <button class="buy-button" title="Buy this item">Buy</button>
-            <div class="product-content">
-                <h3 class="product-title">Bibs</h3>
-                <p class="product-quantity">Need: 1</p>
-                <a href="https://s.shopee.ph/eSk7jNHNQ0" class="shop-button" target="_blank">Shop Now</a>
-            </div>
-        </div>
-
-        <!-- Product 9 -->
-        <div class="product-card" data-id="9">
-            <div class="product-image">
-                <img src="images/bibs5.webp" alt="Bibs" />
-            </div>
-            <button class="buy-button" title="Buy this item">Buy</button>
-            <div class="product-content">
-                <h3 class="product-title">Bibs</h3>
-                <p class="product-quantity">Need: 1</p>
-                <a href="https://s.shopee.ph/vObSCFY6zL" class="shop-button" target="_blank">Shop Now</a>
-            </div>
-        </div>
+<div class="container">
+  <header>
+    <h1>Zhanin's Gift Registry</h1>
+    <p class="subtitle">Help us welcome our little one with these special gifts</p>
+    <div class="header-decoration">
+      <span class="decoration-item">👶</span>
+      <span class="decoration-item">🍼</span>
+      <span class="decoration-item">🧸</span>
+      <span class="decoration-item">👶</span>
+      <span class="decoration-item">🍼</span>
     </div>
+  </header>
+
+  <div class="products-grid">
+    <!-- Products will be dynamically inserted here -->
+  </div>
+</div>
+
+<!-- Recently Purchased Hotbar -->
+<div class="recently-purchased-hotbar" aria-label="Recently purchased items">
+  <h2>Purchased Items:</h2>
+  <ul id="recentList" aria-live="polite" aria-atomic="true">
+    <li>No recent purchases.</li>
+  </ul>
 </div>
 
 <!-- Confirmation Modal -->
-<div class="modal-overlay" id="modalOverlay">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <h2 id="modalTitle">Confirm Purchase</h2>
-        <p>Are you sure you want to mark this item as purchased?</p>
-        <div class="modal-buttons">
-            <button class="modal-button yes" id="confirmYes">Yes</button>
-            <button class="modal-button no" id="confirmNo">No</button>
-        </div>
+<div class="modal-overlay" id="modalOverlay" style="display:none;">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <h2 id="modalTitle">Confirm Purchase</h2>
+    <p>Are you sure you want to mark this item as purchased?</p>
+    <div class="modal-buttons">
+      <button class="modal-button yes" id="confirmYes">Yes</button>
+      <button class="modal-button no" id="confirmNo">No</button>
     </div>
+  </div>
 </div>
 
-<!-- Add this script at the bottom inside your <script> tag -->
-    <script>
-        const modalOverlay = document.getElementById("modalOverlay");
-        const confirmYes = document.getElementById("confirmYes");
-        const confirmNo = document.getElementById("confirmNo");
-    
-        let currentCard = null;
-        const baseUrl = `https://script.google.com/macros/s/AKfycbyBG4ROOZ6M28fILsq9f0i3f_9wRtv5zOGLFF4DwcUhp_Qu4pEnC5KGFAoc2SstDcRYUA/exec`;
-    
-        async function fetchItems() {
-            try {
-                const res = await fetch(baseUrl);
-                const data = await res.json();
-                return data.items || [];
-            } catch (err) {
-                console.error(err);
-                alert("Failed to fetch items.");
-                return [];
-            }
+<script>
+  const modalOverlay = document.getElementById("modalOverlay");
+  const confirmYes = document.getElementById("confirmYes");
+  const confirmNo = document.getElementById("confirmNo");
+  const recentList = document.getElementById("recentList");
+  const RECENT_STORAGE_KEY = "recentlyPurchasedItems";
+
+  let currentCard = null;
+  const baseUrl = `https://script.google.com/macros/s/AKfycbyBG4ROOZ6M28fILsq9f0i3f_9wRtv5zOGLFF4DwcUhp_Qu4pEnC5KGFAoc2SstDcRYUA/exec`;
+
+  async function fetchItems() {
+    try {
+      const res = await fetch(baseUrl);
+      const data = await res.json();
+      return data.items || [];
+    } catch (err) {
+      console.error(err);
+      alert("Failed to fetch items.");
+      return [];
+    }
+  }
+
+  async function incrementPurchased(itemId) {
+    try {
+      const res = await fetch(`${baseUrl}?itemId=${itemId}&action=increment`);
+      return await res.json();
+    } catch (err) {
+      console.error(err);
+      alert('Error: ' + err.message);
+      return null;
+    }
+  }
+
+  async function decrementPurchased(itemId) {
+    try {
+      const res = await fetch(`${baseUrl}?itemId=${itemId}&action=decrement`);
+      return await res.json();
+    } catch (err) {
+      console.error(err);
+      alert('Error: ' + err.message);
+      return null;
+    }
+  }
+
+  function renderItemCard(item) {
+    const purchased = Number(item.Purchased);
+    const needed = Number(item.Needed);
+    const remaining = Math.max(needed - purchased, 0);
+    const disabled = purchased >= needed ? "purchased" : "";
+
+    return `
+      <div class="product-card ${disabled}" data-id="${item.ID}">
+        <div class="product-image">
+          <img src="${item.Image || 'images/placeholder.jpg'}" alt="${item.Name}" />
+        </div>
+        <button class="buy-button" title="Buy this item" ${disabled ? "disabled" : ""}>Buy</button>
+        <div class="product-content">
+          <h3 class="product-title">${item.Name}</h3>
+          <p class="product-quantity">Need: ${remaining}</p>
+          <a href="${item.Link}" class="shop-button" target="_blank">Shop Now</a>
+        </div>
+      </div>
+    `;
+  }
+
+  async function initialize() {
+    const grid = document.querySelector(".products-grid");
+    const items = await fetchItems();
+
+    if (!items.length) {
+      grid.innerHTML = "<p>No items found.</p>";
+      return;
+    }
+
+    grid.innerHTML = items.map(renderItemCard).join("");
+
+    document.querySelectorAll(".buy-button").forEach(button => {
+      button.addEventListener("click", (e) => {
+        e.preventDefault();
+        const card = e.target.closest(".product-card");
+        if (!card || card.classList.contains("purchased")) return;
+
+        currentCard = card;
+        modalOverlay.style.display = "flex";
+      });
+    });
+
+    renderRecentlyPurchased();
+  }
+
+  // LocalStorage helpers for recently purchased
+
+  function addToRecentlyPurchased(item) {
+        let recentItems = JSON.parse(localStorage.getItem(RECENT_STORAGE_KEY)) || [];
+        recentItems.unshift(item);  // Add newest at front
+        if (recentItems.length > 10) recentItems.pop(); // Limit list size
+        localStorage.setItem(RECENT_STORAGE_KEY, JSON.stringify(recentItems));
+        renderRecentlyPurchased();
+    }
+
+
+
+    function removeFromRecentlyPurchased(itemId) {
+        let recentItems = JSON.parse(localStorage.getItem(RECENT_STORAGE_KEY)) || [];
+        const index = recentItems.findIndex(i => i.ID === itemId);
+        if (index !== -1) {
+            recentItems.splice(index, 1); // Remove only one purchase entry at index
         }
-    
-        async function incrementPurchased(itemId) {
-            try {
-                const res = await fetch(`${baseUrl}?itemId=${itemId}`);
-                return await res.json();
-            } catch (err) {
-                console.error(err);
-                alert('Error: ' + err.message);
-                return null;
-            }
+        localStorage.setItem(RECENT_STORAGE_KEY, JSON.stringify(recentItems));
+        renderRecentlyPurchased();
+    }
+
+
+  function renderRecentlyPurchased() {
+    const recentItems = JSON.parse(localStorage.getItem(RECENT_STORAGE_KEY)) || [];
+    if (!recentList) return;
+
+    if (recentItems.length === 0) {
+      recentList.innerHTML = "<li>No recent purchases.</li>";
+      return;
+    }
+
+    recentList.innerHTML = recentItems.map(item => `
+      <li data-id="${item.ID}" title="${item.Name}">
+        <img src="${item.Image || 'images/placeholder.jpg'}" alt="${item.Name}" />
+        <button class="decrement-btn" aria-label="Undo purchase of ${item.Name}">&times;</button>
+      </li>
+    `).join("");
+
+    document.querySelectorAll(".decrement-btn").forEach(btn => {
+      btn.onclick = async () => {
+        const li = btn.closest("li");
+        const id = li.dataset.id;
+        btn.disabled = true;
+        const result = await decrementPurchased(id);
+        btn.disabled = false;
+
+        if (result && result.status === "success") {
+          removeFromRecentlyPurchased(id);
+          await initialize();
+        } else {
+          alert(result?.message || "Could not undo purchase. Try again later.");
         }
-    
-        function renderItemCard(item) {
-            const purchased = Number(item.Purchased);
-            const needed = Number(item.Needed);
-            const remaining = Math.max(needed - purchased, 0);
-            const disabled = purchased >= needed ? "purchased" : "";
-    
-            return `
-                <div class="product-card ${disabled}" data-id="${item.ID}">
-                    <div class="product-image">
-                        <img src="${item.Image || 'images/placeholder.jpg'}" alt="${item.Name}" />
-                    </div>
-                    <button class="buy-button" title="Buy this item" ${disabled ? "disabled" : ""}>Buy</button>
-                    <div class="product-content">
-                        <h3 class="product-title">${item.Name}</h3>
-                        <p class="product-quantity">Need: ${remaining}</p>
-                        <a href="${item.Link}" class="shop-button" target="_blank">Shop Now</a>
-                    </div>
-                </div>
-            `;
-        }
-    
-        async function initialize() {
-            const grid = document.querySelector(".products-grid");
-            const items = await fetchItems();
-    
-            if (!items.length) {
-                grid.innerHTML = "<p>No items found.</p>";
-                return;
-            }
-    
-            grid.innerHTML = items.map(renderItemCard).join("");
-    
-            document.querySelectorAll(".buy-button").forEach(button => {
-                button.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    const card = e.target.closest(".product-card");
-                    if (!card || card.classList.contains("purchased")) return;
-    
-                    currentCard = card;
-                    modalOverlay.style.display = "flex";
-                });
-            });
-        }
-    
-        confirmYes.addEventListener("click", async () => {
-            if (!currentCard) return;
-    
-            const id = currentCard.dataset.id;
-            const result = await incrementPurchased(id);
-    
-            if (result && result.status === "success") {
-                await initialize(); // Re-render all cards
-            } else {
-                alert("Could not update purchase. Try again later.");
-            }
-    
-            modalOverlay.style.display = "none";
-            currentCard = null;
-        });
-    
-        confirmNo.addEventListener("click", () => {
-            modalOverlay.style.display = "none";
-            currentCard = null;
-        });
-    
-        modalOverlay.addEventListener("click", (e) => {
-            if (e.target === modalOverlay) {
-                modalOverlay.style.display = "none";
-                currentCard = null;
-            }
-        });
-    
-        document.addEventListener("DOMContentLoaded", initialize);
-    </script>
-    
-    
-        
-</body> </html>
+      };
+    });
+  }
+
+  // Confirm modal button handlers
+
+  confirmYes.addEventListener("click", async () => {
+    if (!currentCard) return;
+
+    confirmYes.disabled = true;
+
+    const id = currentCard.dataset.id;
+    const result = await incrementPurchased(id);
+
+    if (result && result.status === "success") {
+      // Expecting updated item in result.item, fallback to current card data
+      addToRecentlyPurchased(result.item || {
+        ID: id,
+        Name: currentCard.querySelector(".product-title").textContent,
+        Image: currentCard.querySelector("img")?.src || 'images/placeholder.jpg'
+      });
+      await initialize();
+    } else {
+      alert(result?.message || "Could not update purchase. Try again later.");
+    }
+
+    confirmYes.disabled = false;
+    modalOverlay.style.display = "none";
+    currentCard = null;
+  });
+
+  confirmNo.addEventListener("click", () => {
+    modalOverlay.style.display = "none";
+    currentCard = null;
+  });
+
+  modalOverlay.addEventListener("click", (e) => {
+    if (e.target === modalOverlay) {
+      modalOverlay.style.display = "none";
+      currentCard = null;
+    }
+  });
+
+  document.addEventListener("DOMContentLoaded", initialize);
+</script>
+</body>
+</html>
