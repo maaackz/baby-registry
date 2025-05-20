@@ -4,12 +4,21 @@
   <title>Test Sheet Update</title>
 </head>
 <body>
-  <button onclick="updateSheet()">Update Sheet</button>
+  <h2>Increment Purchased Count by Item ID</h2>
+
+  <button onclick="updateSheet(1)">Increment Item 1</button>
+  <button onclick="updateSheet(2)">Increment Item 2</button>
+  <button onclick="updateSheet(3)">Increment Item 3</button>
+  <button onclick="updateSheet(999)">Increment Item 999 (likely invalid)</button>
 
   <script>
-    function updateSheet() {
-      fetch('https://script.google.com/macros/s/AKfycbw4Vz9Ee_Cil_THcH3h5cdQsL8lj6r1KxdgwFQB0KUe/dev', {
-        method: 'POST'
+    function updateSheet(itemId) {
+      fetch('https://script.google.com/macros/s/AKfycbyBG4ROOZ6M28fILsq9f0i3f_9wRtv5zOGLFF4DwcUhp_Qu4pEnC5KGFAoc2SstDcRYUA/exec', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ itemId: itemId })
       })
       .then(response => response.json())
       .then(data => {
