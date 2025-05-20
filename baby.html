@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zhanin's Gift Registry</title>
+    <style>
+        :root {
+            --primary-color: #b3d9ff;
+            --secondary-color: #e6f2ff;
+            --accent-color: #99c2ff;
+            --text-color: #2c3e50;
+            --button-color: #7fb3ff;
+            --button-hover: #5c9aff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: #34495e;
+            padding: 0 15px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-content {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-title {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        
+        .product-quantity {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+        
+        .shop-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--button-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: auto;
+        }
+        
+        .shop-button:hover {
+            background-color: var(--button-hover);
+        }
+        
+        .product-image {
+            height: 200px;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            padding: 15px;
+            background-color: var(--primary-color);
+            border-radius: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 10px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .product-image {
+                height: 150px;
+            }
+            
+            .product-title {
+                font-size: 1rem;
+            }
+            
+            .product-quantity {
+                font-size: 0.8rem;
+            }
+            
+            .shop-button {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+            
+            .container {
+                padding: 8px;
+            }
+            
+            .product-content {
+                padding: 10px;
+            }
+            
+            .purchased::after {
+                font-size: 1.2rem;
+                padding: 5px 10px;
+            }
+        }
+        
+        /* Baby-themed decorative elements */
+        .header-decoration {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .decoration-item {
+            margin: 0 10px;
+            font-size: 1.5rem;
+            color: #7fb3ff;
+        }
+        
+        /* Purchased item styling */
+        .purchased {
+            position: relative;
+        }
+        
+        .purchased::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+            border-radius: 15px;
+        }
+        
+        .purchased::after {
+            content: "PURCHASED";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            z-index: 2;
+            background-color: rgba(255, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 5px;
+            letter-spacing: 2px;
+        }
+        
+        .purchased .shop-button {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        .purchased .shop-button:hover {
+            background-color: #95a5a6;
+        }
+        
+        /* Admin controls - hidden by default */
+        .admin-controls {
+            display: none; /* Hidden by default */
+            margin-bottom: 30px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .admin-mode-active .admin-controls {
+            display: block;
+        }
+        
+        .admin-header {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        
+        .admin-instructions {
+            margin-bottom: 15px;
+        }
+        
+        .admin-button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .admin-button.danger {
+            background-color: #e74c3c;
+        }
+        
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            border-radius: 4px;
+        }
+        
+        .available-color {
+            background-color: white;
+            border: 1px solid #ddd;
+        }
+        
+        .purchased-color {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        
+        /* Admin mode indicator */
+        .admin-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+        }
+        
+        .admin-mode-active .admin-indicator {
+            display: block;
+        }
+        
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: var(--button-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Zhanin's Gift Registry</h1>
+            <p class="subtitle">Help us welcome our little one with these special gifts</p>
+            <div class="header-decoration">
+                <span class="decoration-item">👶</span>
+                <span class="decoration-item">🍼</span>
+                <span class="decoration-item">🧸</span>
+                <span class="decoration-item">👶</span>
+                <span class="decoration-item">🍼</span>
+            </div>
+        </header>
+        
+        <!-- Admin Controls - Hidden by default -->
+        <div class="admin-controls">
+            <div class="admin-header">
+                <h2>ADMIN MODE</h2>
+            </div>
+            <p class="admin-instructions">Click on any product to toggle its purchased status.</p>
+            <button id="saveChanges" class="admin-button">Save Changes</button>
+            <button id="exitAdmin" class="admin-button danger">Exit Admin Mode</button>
+            
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color available-color"></div>
+                    <span>Available</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color purchased-color"></div>
+                    <span>Purchased</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="products-grid">
+            <!-- Product 1 -->
+            <div class="product-card" data-id="1">
+                <div class="product-image">
+                    <img src="images/bb1.jpg" alt="Baby Bottle">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Baby Bottle</h3>
+                    <p class="product-quantity">Need: 1</p>
+                    <a href="https://s.shopee.ph/AUhEEBtz7c" class="shop-button" target="_blank">Shop Now</a>
+                </div>
+            </div>
+            
+            <!-- Product 2 -->
+            <div class="product-card" data-id="2">
+                <div class="product-image">
+                    <img src="images/baby2.webp" alt="Baby Bottle">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Baby Bottle</h3>
+                    <p class="product-quantity">Need: 1</p>
+                    <a href="https://s.shopee.ph/7KkCSYsFv8" class="shop-button" target="_blank">Shop Now</a>
+                </div>
+            </div>
+            
+            <!-- Product 3 -->
+            <div class="product-card" data-id="3">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/400x300/b3d9ff/2c3e50?text=Baby+Bottle+Set" alt="Baby Bottle Set">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Baby Bottle Set</h3>
+                    <p class="product-quantity">Need: 1</p>
+                    <a href="https://s.shopee.ph/AUhEFA0Grg" class="shop-button" target="_blank">Shop Now</a>
+                </div>
+            </div>
+            
+            <!-- Product 5 -->
+            <div class="product-card" data-id="5">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/400x300/b3d9ff/2c3e50?text=Pacifier" alt="Pacifier">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Pacifier</h3>
+                    <p class="product-quantity">Need: 1</p>
+                    <a href="https://s.shopee.ph/5fbyTXAmm2" class="shop-button" target="_blank">Shop Now</a>
+                </div>
+            </div>
+            
+            <!-- Product 6 -->
+            <div class="product-card" data-id="6">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/400x300/b3d9ff/2c3e50?text=Natural+Nipples" alt="First Flow Natural Nipples">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">First Flow Natural Nipples 2-pack</h3>
+                    <p class="product-quantity">Need: 1</p>
+                    <a href="https://s.shopee.ph/7AQmGKdjx3" class="shop-button" target="_blank">Shop Now</a>
+                </div>
+            </div>
+            
+            <!-- Product 7 -->
+            <div class="product-card" data-id="7">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/400x300/b3d9ff/2c3e50?text=Changing+Table" alt="Diaper Changing Table">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Diaper Changing Table</h3>
+                    <p class="product-quantity">Need: 1</p>
+                    <a href="https://s.shopee.ph/8Uw9tklzLq" class="shop-button" target="_blank">Shop Now</a>
+                </div>
+            </div>
+            
+            <!-- Product 8 -->
+            <div class="product-card" data-id="8">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/400x300/b3d9ff/2c3e50?text=Diapers" alt="Rascal + Friends Diaper">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Rascal + Friends Diaper</h3>
+                    <p class="product-quantity">Need: 10</p>
+                    <a href="https://s.shopee.ph/1qPFuc8T0m" class="shop-button" target="_blank">Shop Now</a>
+                </div>
+            </div>
+            
+            <!-- Product 9 -->
+            <div class="product-card" data-id="9">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/400x300/b3d9ff/2c3e50?text=Cotton+Wipes" alt="Dry Cotton Wipes">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Dry Cotton Wipes</h3>
+                    <p class="product-quantity">Need: 2</p>
+                    <a href="https://s.shopee.ph/707M4FThWO" class="shop-button" target="_blank">Shop Now</a>
+                </div>
+            </div>
+            
+            <!-- Product 10 -->
+            <div class="product-card" data-id="10">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/400x300/b3d9ff/2c3e50?text=Cleansing+Water" alt="Mustella Cleansing Water">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Mustella Cleansing Water</h3>
+                    <p class="product-quantity">Need: 3</p>
+                    <a href="https://s.shopee.ph/7fN2rXQ65U" class="shop-button" target="_blank">Shop Now</a>
+                </div>
+            </div>
+            
+            <!-- Product 11 -->
+            <div class="product-card" data-id="11">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/400x300/b3d9ff/2c3e50?text=Barrier+Cream" alt="Mustella Vitamin Barrier Cream">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Mustella Vitamin Barrier Cream</h3>
+                    <p class="product-quantity">Need: 2</p>
+                    <a href="https://s.shopee.ph/5pvOgEmN8Q" class="shop-button" target="_blank">Shop Now</a>
+                </div>
+            </div>
+            
+            <!-- Product 12 -->
+            <div class="product-card" data-id="12">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/400x300/b3d9ff/2c3e50?text=Baby+Wash" alt="Cetaphil Baby Gentle Wash">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Cetaphil Baby Gentle Wash</h3>
+                    <p class="product-quantity">Need: 2</p>
+                    <a href="https://s.shopee.ph/1VmPWZZoWi" class="shop-button" target="_blank">Shop Now</a>
+                </div>
+            </div>
+            
+            <!-- Product 13 -->
+            <div class="product-card" data-id="13">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/400x300/b3d9ff/2c3e50?text=Baby+Fan" alt="Octopus Baby Fan">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Octopus Baby Fan</h3>
+                    <p class="product-quantity">Need: 1</p>
+                    <a href="https://s.shopee.ph/60EotNRQ5k" class="shop-button" target="_blank">Shop Now</a>
+                </div>
+            </div>
+            
+            <!-- Product 14 -->
+            <div class="product-card" data-id="14">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/400x300/b3d9ff/2c3e50?text=High+Chair" alt="Baby High Chair">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Baby High Chair</h3>
+                    <p class="product-quantity">Need: 1</p>
+                    <a href="https://s.shopee.ph/8fFa5Ii49d" class="shop-button" target="_blank">Shop Now</a>
+                </div>
+            </div>
+            
+            <!-- Product 15 -->
+            <div class="product-card" data-id="15">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/400x300/b3d9ff/2c3e50?text=Baby+Crib" alt="Baby Crib (Blue Whale)">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Baby Crib (Blue Whale)</h3>
+                    <p class="product-quantity">Need: 1</p>
+                    <a href="https://s.shopee.ph/xbmP7M7K" class="shop-button" target="_blank">Shop Now</a>
+                </div>
+            </div>
+            
+            <!-- NEW Product 16: Silicone Feeding Set -->
+            <div class="product-card" data-id="16">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/400x300/b3d9ff/2c3e50?text=Silicone+Feeding+Set" alt="Silicone Feeding Set">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Silicone Feeding Set</h3>
+                    <p class="product-quantity">Need: 1</p>
+                    <a href="https://s.shopee.ph/1B9bXMi5Dd" class="shop-button" target="_blank">Shop Now</a>
+                </div>
+            </div>
+            
+            <!-- NEW Product 17: Push Walker -->
+            <div class="product-card" data-id="17">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/400x300/b3d9ff/2c3e50?text=Push+Walker" alt="Push Walker">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Push Walker</h3>
+                    <p class="product-quantity">Need: 1</p>
+                    <a href="https://vt.tiktok.com/ZShkVcWFC/" class="shop-button" target="_blank">Shop Now</a>
+                </div>
+            </div>
+            
+            <!-- NEW Product 18: Baby Onesies -->
+            <div class="product-card" data-id="18">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/400x300/b3d9ff/2c3e50?text=Baby+Onesies" alt="Baby Onesies">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">Baby Onesies</h3>
+                    <p class="product-quantity">Need: 3</p>
+                    <a href="https://s.shopee.ph/3LE6BBw4jB" class="shop-button" target="_blank">Shop Now</a>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Thank you for helping us prepare for our little bundle of joy! 💙</p>
+        </footer>
+    </div>
+    
+    <!-- Admin mode indicator - only visible in admin mode -->
+    <div class="admin-indicator">Admin Mode</div>
+    
+    <!-- Back to top button -->
+    <a href="#" class="back-to-top" id="backToTop">↑</a>
+
+    <script>
+        // Check for admin mode in URL parameter
+        function checkAdminMode() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.has('admin');
+        }
+        
+        // Load purchased status from localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const purchasedItems = JSON.parse(localStorage.getItem('purchasedItems')) || [];
+            
+            // Apply purchased status to items
+            purchasedItems.forEach(id => {
+                const card = document.querySelector(`.product-card[data-id="${id}"]`);
+                if (card) {
+                    card.classList.add('purchased');
+                }
+            });
+            
+            // Check if we should enable admin mode
+            if (checkAdminMode()) {
+                enableAdminMode();
+            }
+            
+            // Prevent shop button from working on purchased items
+            document.querySelectorAll('.product-card').forEach(card => {
+                const shopButton = card.querySelector('.shop-button');
+                shopButton.addEventListener('click', function(e) {
+                    if (card.classList.contains('purchased')) {
+                        e.preventDefault();
+                        alert('This item has already been purchased.');
+                    }
+                });
+            });
+            
+            // Back to top button functionality
+            const backToTopButton = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Enable admin mode
+        function enableAdminMode() {
+            document.body.classList.add('admin-mode-active');
+            
+            // Add click handlers to products for toggling purchased status
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // Only toggle if not clicking on the shop button
+                    if (!e.target.classList.contains('shop-button')) {
+                        e.preventDefault();
+                        card.classList.toggle('purchased');
+                    }
+                });
+            });
+            
+            // Add exit admin mode handler
+            document.getElementById('exitAdmin').addEventListener('click', function() {
+                // Remove admin parameter from URL without refreshing
+                const url = new URL(window.location);
+                url.searchParams.delete('admin');
+                window.history.replaceState({}, '', url);
+                
+                // Remove admin mode class
+                document.body.classList.remove('admin-mode-active');
+                
+                // Reload to ensure all event handlers are reset
+                window.location.reload();
+            });
+            
+            // Add save changes handler
+            document.getElementById('saveChanges').addEventListener('click', function() {
+                const purchasedItems = [];
+                
+                document.querySelectorAll('.product-card.purchased').forEach(card => {
+                    purchasedItems.push(card.dataset.id);
+                });
+                
+                localStorage.setItem('purchasedItems', JSON.stringify(purchasedItems));
+                alert('Changes saved successfully!');
+            });
+        }
+    </script>
+</body>
+</html>
