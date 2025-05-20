@@ -1,276 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Zhanin's Gift Registry</title>
-    <style>
-        :root {
-            --primary-color: #b3d9ff;
-            --secondary-color: #e6f2ff;
-            --accent-color: #99c2ff;
-            --text-color: #2c3e50;
-            --button-color: #7fb3ff;
-            --button-hover: #5c9aff;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-        }
-        
-        body {
-            background-color: var(--secondary-color);
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 10px;
-        }
-        
-        header {
-            background-color: var(--primary-color);
-            padding: 20px 0;
-            text-align: center;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        h1 {
-            font-size: 2rem;
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            font-size: 1.1rem;
-            color: #34495e;
-            padding: 0 15px;
-        }
-        
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 15px;
-        }
-        
-        .product-card {
-            background-color: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            position: relative;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .product-content {
-            padding: 15px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .product-title {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-            color: #2c3e50;
-        }
-        
-        .product-quantity {
-            font-size: 0.9rem;
-            color: #7f8c8d;
-            margin-bottom: 12px;
-            font-weight: bold;
-        }
-        
-        .shop-button {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            background-color: var(--button-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            text-align: center;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: auto;
-        }
-        
-        .shop-button:hover {
-            background-color: var(--button-hover);
-        }
-        
-        .product-image {
-            height: 200px;
-            background-color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-        
-        .product-card:hover .product-image img {
-            transform: scale(1.05);
-        }
-        
-        footer {
-            margin-top: 30px;
-            text-align: center;
-            padding: 15px;
-            background-color: var(--primary-color);
-            border-radius: 15px;
-        }
-        
-        @media (max-width: 768px) {
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-                gap: 10px;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            .subtitle {
-                font-size: 1rem;
-            }
-            
-            .product-image {
-                height: 150px;
-            }
-            
-            .product-title {
-                font-size: 1rem;
-            }
-            
-            .product-quantity {
-                font-size: 0.8rem;
-            }
-            
-            .shop-button {
-                padding: 10px;
-                font-size: 0.9rem;
-            }
-            
-            .container {
-                padding: 8px;
-            }
-            
-            .product-content {
-                padding: 10px;
-            }
-            
-            .purchased::after {
-                font-size: 1.2rem;
-                padding: 5px 10px;
-            }
-        }
-        
-        /* Baby-themed decorative elements */
-        .header-decoration {
-            display: flex;
-            justify-content: center;
-            margin-top: 15px;
-        }
-        
-        .decoration-item {
-            margin: 0 10px;
-            font-size: 1.5rem;
-            color: #7fb3ff;
-        }
-        
-        /* Purchased item styling */
-        .purchased {
-            position: relative;
-        }
-        
-        .purchased::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            z-index: 1;
-            border-radius: 15px;
-        }
-        
-        .purchased::after {
-            content: "PURCHASED";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-30deg);
-            color: white;
-            font-size: 1.8rem;
-            font-weight: bold;
-            z-index: 2;
-            background-color: rgba(255, 0, 0, 0.7);
-            padding: 10px 20px;
-            border-radius: 5px;
-            letter-spacing: 2px;
-        }
-        
-        .purchased .shop-button {
-            background-color: #95a5a6;
-            cursor: not-allowed;
-        }
-        
-        .purchased .shop-button:hover {
-            background-color: #95a5a6;
-        }
-        
-        /* Back to top button */
-        .back-to-top {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background-color: var(--button-color);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            font-size: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .back-to-top.visible {
-            opacity: 1;
-        }
-    </style>
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
     <div class="container">
@@ -285,267 +19,248 @@
                 <span class="decoration-item">🍼</span>
             </div>
         </header>
-        
+
         <div class="products-grid">
-            <!-- Product 1 -->
+            <!-- Example product card -->
             <div class="product-card" data-id="1">
                 <div class="product-image">
-                    <img src="images/bb1.jpg" alt="Baby Bottle">
+                    <img src="images/bb1.jpg" alt="Baby Bottle" />
                 </div>
+                <button class="buy-button" title="Buy this item">Buy</button>
                 <div class="product-content">
                     <h3 class="product-title">Baby Bottle</h3>
                     <p class="product-quantity">Need: 1</p>
                     <a href="https://s.shopee.ph/AUhEEBtz7c" class="shop-button" target="_blank">Shop Now</a>
                 </div>
             </div>
-            
+            <!-- Repeat product cards similarly, add buy-button to all -->
+            <!-- Skipping repeating all for brevity, but you would add the <button class="buy-button">Buy</button> inside each .product-card -->
+            <!-- I'll add for all cards in the final script below -->
+
             <!-- Product 2 -->
             <div class="product-card" data-id="2">
                 <div class="product-image">
-                    <img src="images/baby2.webp" alt="Baby Bottle">
+                    <img src="images/baby2.webp" alt="Baby Bottle" />
                 </div>
+                <button class="buy-button" title="Buy this item">Buy</button>
                 <div class="product-content">
                     <h3 class="product-title">Baby Bottle</h3>
                     <p class="product-quantity">Need: 1</p>
                     <a href="https://s.shopee.ph/7KkCSYsFv8" class="shop-button" target="_blank">Shop Now</a>
                 </div>
             </div>
-            
+
             <!-- Product 3 -->
             <div class="product-card" data-id="3">
                 <div class="product-image">
-                    <img src="images/chupon.webp" alt="Baby Bottle Set">
+                    <img src="images/chupon.webp" alt="Baby Bottle Set" />
                 </div>
+                <button class="buy-button" title="Buy this item">Buy</button>
                 <div class="product-content">
                     <h3 class="product-title">Baby Bottle Set</h3>
-                    <p class="product-quantity">Need: 1</p>
-                    <a href="https://s.shopee.ph/AUhEFA0Grg" class="shop-button" target="_blank">Shop Now</a>
-                </div>
+                    <p class="product-quantity">Need:1</p>
+                    <a href="https://s.shopee.ph/hBFZTYq3P" class="shop-button" target="_blank">Shop Now</a>
+                    </div>
+                    </div>
+        <!-- Product 4 -->
+        <div class="product-card" data-id="4">
+            <div class="product-image">
+                <img src="images/biberon.webp" alt="Baby Bottle" />
             </div>
-            
-            <!-- Product 5 -->
-            <div class="product-card" data-id="5">
-                <div class="product-image">
-                    <img src="images/paci.webp" alt="Pacifier">
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">Pacifier</h3>
-                    <p class="product-quantity">Need: 1</p>
-                    <a href="https://s.shopee.ph/5fbyTXAmm2" class="shop-button" target="_blank">Shop Now</a>
-                </div>
-            </div>
-            
-            <!-- Product 6 -->
-            <div class="product-card" data-id="6">
-                <div class="product-image">
-                    <img src="images/pac.webp" alt="First Flow Natural Nipples">
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">First Flow Natural Nipples 2-pack</h3>
-                    <p class="product-quantity">Need: 1</p>
-                    <a href="https://s.shopee.ph/7AQmGKdjx3" class="shop-button" target="_blank">Shop Now</a>
-                </div>
-            </div>
-            
-            <!-- Product 7 -->
-            <div class="product-card" data-id="7">
-                <div class="product-image">
-                    <img src="images/table.webp" alt="Diaper Changing Table">
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">Diaper Changing Table</h3>
-                    <p class="product-quantity">Need: 1</p>
-                    <a href="https://s.shopee.ph/8Uw9tklzLq" class="shop-button" target="_blank">Shop Now</a>
-                </div>
-            </div>
-            
-            <!-- Product 8 -->
-            <div class="product-card" data-id="8">
-                <div class="product-image">
-                    <img src="images/rasc.webp" alt="Rascal + Friends Diaper">
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">Rascal + Friends Diaper</h3>
-                    <p class="product-quantity">Need: 10</p>
-                    <a href="https://s.shopee.ph/1qPFuc8T0m" class="shop-button" target="_blank">Shop Now</a>
-                </div>
-            </div>
-            
-            <!-- Product 9 -->
-            <div class="product-card" data-id="9">
-                <div class="product-image">
-                    <img src="images/wips.webp" alt="Dry Cotton Wipes">
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">Dry Cotton Wipes</h3>
-                    <p class="product-quantity">Need: 2</p>
-                    <a href="https://s.shopee.ph/707M4FThWO" class="shop-button" target="_blank">Shop Now</a>
-                </div>
-            </div>
-            
-            <!-- Product 10 -->
-            <div class="product-card" data-id="10">
-                <div class="product-image">
-                    <img src="images/must.webp" alt="Mustella Cleansing Water">
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">Mustella Cleansing Water</h3>
-                    <p class="product-quantity">Need: 3</p>
-                    <a href="https://s.shopee.ph/7fN2rXQ65U" class="shop-button" target="_blank">Shop Now</a>
-                </div>
-            </div>
-            
-            <!-- Product 11 -->
-            <div class="product-card" data-id="11">
-                <div class="product-image">
-                    <img src="images/must2.webp" alt="Mustella Vitamin Barrier Cream">
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">Mustella Vitamin Barrier Cream</h3>
-                    <p class="product-quantity">Need: 2</p>
-                    <a href="https://s.shopee.ph/5pvOgEmN8Q" class="shop-button" target="_blank">Shop Now</a>
-                </div>
-            </div>
-            
-            <!-- Product 12 -->
-            <div class="product-card" data-id="12">
-                <div class="product-image">
-                    <img src="images/ceta.webp" alt="Cetaphil Baby Gentle Wash">
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">Cetaphil Baby Gentle Wash</h3>
-                    <p class="product-quantity">Need: 2</p>
-                    <a href="https://s.shopee.ph/1VmPWZZoWi" class="shop-button" target="_blank">Shop Now</a>
-                </div>
-            </div>
-            
-            <!-- Product 13 -->
-            <div class="product-card" data-id="13">
-                <div class="product-image">
-                    <img src="images/jisus.webp" alt="Octopus Baby Fan">
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">Octopus Baby Fan</h3>
-                    <p class="product-quantity">Need: 1</p>
-                    <a href="https://s.shopee.ph/60EotNRQ5k" class="shop-button" target="_blank">Shop Now</a>
-                </div>
-            </div>
-            
-            <!-- Product 14 -->
-            <div class="product-card" data-id="14">
-                <div class="product-image">
-                    <img src="images/chair.webp" alt="Baby High Chair">
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">Baby High Chair</h3>
-                    <p class="product-quantity">Need: 1</p>
-                    <a href="https://s.shopee.ph/8fFa5Ii49d" class="shop-button" target="_blank">Shop Now</a>
-                </div>
-            </div>
-            
-            <!-- Product 15 -->
-            <div class="product-card" data-id="15">
-                <div class="product-image">
-                    <img src="images/crib.webp" alt="Baby Crib (Blue Whale)">
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">Baby Crib (Blue Whale)</h3>
-                    <p class="product-quantity">Need: 1</p>
-                    <a href="https://s.shopee.ph/xbmP7M7K" class="shop-button" target="_blank">Shop Now</a>
-                </div>
-            </div>
-            
-            <!-- NEW Product 16: Silicone Feeding Set -->
-            <div class="product-card" data-id="16">
-                <div class="product-image">
-                    <img src="images/hoshi_baby_feeding_set.webp" alt="Silicone Feeding Set">
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">Silicone Feeding Set</h3>
-                    <p class="product-quantity">Need: 1</p>
-                    <a href="https://s.shopee.ph/1B9bXMi5Dd" class="shop-button" target="_blank">Shop Now</a>
-                </div>
-            </div>
-            
-            <!-- NEW Product 17: Push Walker -->
-            <div class="product-card" data-id="17">
-                <div class="product-image">
-                    <img src="images/baby_push_walker.webp" alt="Push Walker">
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">Push Walker</h3>
-                    <p class="product-quantity">Need: 1</p>
-                    <a href="https://shop-ph.tiktok.com/pdp/baby-push-walker-momyso-sit-to-stand-early-learning-toys-table/1730855414859532356?source=301" class="shop-button" target="_blank">Shop Now</a>
-                </div>
-            </div>
-            
-            <!-- NEW Product 18: Baby Onesies -->
-            <div class="product-card" data-id="18">
-                <div class="product-image">
-                    <img src="images/onesies.webp" alt="Baby Onesies">
-                </div>
-                <div class="product-content">
-                    <h3 class="product-title">Baby Onesies</h3>
-                    <p class="product-quantity">Need: 3</p>
-                    <a href="https://s.shopee.ph/3LE6BBw4jB" class="shop-button" target="_blank">Shop Now</a>
-                </div>
+            <button class="buy-button" title="Buy this item">Buy</button>
+            <div class="product-content">
+                <h3 class="product-title">Baby Bottle</h3>
+                <p class="product-quantity">Need: 1</p>
+                <a href="https://s.shopee.ph/d3V4Xgsvh" class="shop-button" target="_blank">Shop Now</a>
             </div>
         </div>
-        
-        <footer>
-            <p>Thank you for helping us prepare for our little bundle of joy! 💙</p>
-        </footer>
-    </div>
-    
-    <!-- Back to top button -->
-    <a href="#" class="back-to-top" id="backToTop">↑</a>
 
+        <!-- Product 5 -->
+        <div class="product-card" data-id="5">
+            <div class="product-image">
+                <img src="images/bibs.webp" alt="Bibs" />
+            </div>
+            <button class="buy-button" title="Buy this item">Buy</button>
+            <div class="product-content">
+                <h3 class="product-title">Bibs</h3>
+                <p class="product-quantity">Need: 1</p>
+                <a href="https://s.shopee.ph/HCs1OXLUGf" class="shop-button" target="_blank">Shop Now</a>
+            </div>
+        </div>
+
+        <!-- Product 6 -->
+        <div class="product-card" data-id="6">
+            <div class="product-image">
+                <img src="images/bibs2.webp" alt="Bibs" />
+            </div>
+            <button class="buy-button" title="Buy this item">Buy</button>
+            <div class="product-content">
+                <h3 class="product-title">Bibs</h3>
+                <p class="product-quantity">Need: 1</p>
+                <a href="https://s.shopee.ph/IpCo1J2fQ" class="shop-button" target="_blank">Shop Now</a>
+            </div>
+        </div>
+
+        <!-- Product 7 -->
+        <div class="product-card" data-id="7">
+            <div class="product-image">
+                <img src="images/bibs3.webp" alt="Bibs" />
+            </div>
+            <button class="buy-button" title="Buy this item">Buy</button>
+            <div class="product-content">
+                <h3 class="product-title">Bibs</h3>
+                <p class="product-quantity">Need: 1</p>
+                <a href="https://s.shopee.ph/AvGZxOJ5Qx" class="shop-button" target="_blank">Shop Now</a>
+            </div>
+        </div>
+
+        <!-- Product 8 -->
+        <div class="product-card" data-id="8">
+            <div class="product-image">
+                <img src="images/bibs4.webp" alt="Bibs" />
+            </div>
+            <button class="buy-button" title="Buy this item">Buy</button>
+            <div class="product-content">
+                <h3 class="product-title">Bibs</h3>
+                <p class="product-quantity">Need: 1</p>
+                <a href="https://s.shopee.ph/eSk7jNHNQ0" class="shop-button" target="_blank">Shop Now</a>
+            </div>
+        </div>
+
+        <!-- Product 9 -->
+        <div class="product-card" data-id="9">
+            <div class="product-image">
+                <img src="images/bibs5.webp" alt="Bibs" />
+            </div>
+            <button class="buy-button" title="Buy this item">Buy</button>
+            <div class="product-content">
+                <h3 class="product-title">Bibs</h3>
+                <p class="product-quantity">Need: 1</p>
+                <a href="https://s.shopee.ph/vObSCFY6zL" class="shop-button" target="_blank">Shop Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <h2 id="modalTitle">Confirm Purchase</h2>
+        <p>Are you sure you want to mark this item as purchased?</p>
+        <div class="modal-buttons">
+            <button class="modal-button yes" id="confirmYes">Yes</button>
+            <button class="modal-button no" id="confirmNo">No</button>
+        </div>
+    </div>
+</div>
+
+<!-- Add this script at the bottom inside your <script> tag -->
     <script>
-        const WEB_APP_URL = 'https://script.google.com/macros/library/d/1nLQJlkQHRsqLwSSvbetC0z61KOUx0rMoVsM16qKz4pLkbjwCcMtxg_U-/1';
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            const cards = document.querySelectorAll('.product-card');
-        
-            // Load data from Google Sheets
-            fetch(WEB_APP_URL)
-                .then(res => res.json())
-                .then(items => {
-                    items.forEach(item => {
-                        const card = document.querySelector(`.product-card[data-id="${item.ID}"]`);
-                        if (card) {
-                            const qtyEl = card.querySelector('.product-quantity');
-                            qtyEl.textContent = `Needed: ${item.Needed} • Purchased: ${item.Purchased}`;
-                            card.classList.toggle('purchased', item.Purchased >= item.Needed);
-                        }
-                    });
-                });
-        
-            cards.forEach(card => {
-                card.addEventListener('click', () => {
-                    const id = card.dataset.id;
-                    fetch(WEB_APP_URL, {
-                        method: 'POST',
-                        body: JSON.stringify({ id }),
-                        headers: { 'Content-Type': 'application/json' }
-                    })
-                    .then(res => res.json())
-                    .then(result => {
-                        if (result.success) {
-                            const qtyEl = card.querySelector('.product-quantity');
-                            const text = qtyEl.textContent.match(/\d+/g);
-                            const needed = parseInt(text[0]);
-                            const newPurchased = result.purchased;
-                            qtyEl.textContent = `Needed: ${needed} • Purchased: ${newPurchased}`;
-                            card.classList.toggle('purchased', newPurchased >= needed);
-                        } else {
-                            alert(result.message);
-                        }
-                    });
+        const modalOverlay = document.getElementById("modalOverlay");
+        const confirmYes = document.getElementById("confirmYes");
+        const confirmNo = document.getElementById("confirmNo");
+    
+        let currentCard = null;
+        const baseUrl = `https://script.google.com/macros/s/AKfycbyBG4ROOZ6M28fILsq9f0i3f_9wRtv5zOGLFF4DwcUhp_Qu4pEnC5KGFAoc2SstDcRYUA/exec`;
+    
+        async function fetchItems() {
+            try {
+                const res = await fetch(baseUrl);
+                const data = await res.json();
+                return data.items || [];
+            } catch (err) {
+                console.error(err);
+                alert("Failed to fetch items.");
+                return [];
+            }
+        }
+    
+        async function incrementPurchased(itemId) {
+            try {
+                const res = await fetch(`${baseUrl}?itemId=${itemId}`);
+                return await res.json();
+            } catch (err) {
+                console.error(err);
+                alert('Error: ' + err.message);
+                return null;
+            }
+        }
+    
+        function renderItemCard(item) {
+            const purchased = Number(item.Purchased);
+            const needed = Number(item.Needed);
+            const remaining = Math.max(needed - purchased, 0);
+            const disabled = purchased >= needed ? "purchased" : "";
+    
+            return `
+                <div class="product-card ${disabled}" data-id="${item.ID}">
+                    <div class="product-image">
+                        <img src="${item.Image || 'images/placeholder.jpg'}" alt="${item.Name}" />
+                    </div>
+                    <button class="buy-button" title="Buy this item" ${disabled ? "disabled" : ""}>Buy</button>
+                    <div class="product-content">
+                        <h3 class="product-title">${item.Name}</h3>
+                        <p class="product-quantity">Need: ${remaining}</p>
+                        <a href="${item.Link}" class="shop-button" target="_blank">Shop Now</a>
+                    </div>
+                </div>
+            `;
+        }
+    
+        async function initialize() {
+            const grid = document.querySelector(".products-grid");
+            const items = await fetchItems();
+    
+            if (!items.length) {
+                grid.innerHTML = "<p>No items found.</p>";
+                return;
+            }
+    
+            grid.innerHTML = items.map(renderItemCard).join("");
+    
+            document.querySelectorAll(".buy-button").forEach(button => {
+                button.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const card = e.target.closest(".product-card");
+                    if (!card || card.classList.contains("purchased")) return;
+    
+                    currentCard = card;
+                    modalOverlay.style.display = "flex";
                 });
             });
+        }
+    
+        confirmYes.addEventListener("click", async () => {
+            if (!currentCard) return;
+    
+            const id = currentCard.dataset.id;
+            const result = await incrementPurchased(id);
+    
+            if (result && result.status === "success") {
+                await initialize(); // Re-render all cards
+            } else {
+                alert("Could not update purchase. Try again later.");
+            }
+    
+            modalOverlay.style.display = "none";
+            currentCard = null;
         });
-        </script>
+    
+        confirmNo.addEventListener("click", () => {
+            modalOverlay.style.display = "none";
+            currentCard = null;
+        });
+    
+        modalOverlay.addEventListener("click", (e) => {
+            if (e.target === modalOverlay) {
+                modalOverlay.style.display = "none";
+                currentCard = null;
+            }
+        });
+    
+        document.addEventListener("DOMContentLoaded", initialize);
+    </script>
+    
+    
         
-        
-</body>
-</html>
+</body> </html>
