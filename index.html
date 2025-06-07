@@ -7,346 +7,55 @@
 <link rel="stylesheet" href="main.css" />
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2867/2867024.png" type="image/png">
-
 </head>
 <body>
     <div class="background-blur"></div>
     <a href="#" class="back-to-top" id="backToTop">↑</a>
-    <!-- <div class="parallax-bg"></div>
-    <script>
-        const parallaxBg = document.querySelector('.parallax-bg');
-      
-        window.addEventListener('scroll', () => {
-          const scrollY = window.scrollY;
-          parallaxBg.style.transform = `translateY(${scrollY * 0.4}px)`; // Adjust the multiplier for speed
-        });
-      </script> -->
-      
-<div class="container">
-  <header>
-    <h1>Baby Z's Gift Registry</h1>
-    <p class="subtitle">Help us welcome our little one with these special gifts!</p>
-    <div class="header-decoration">
-      <span class="decoration-item">👶</span>
-      <span class="decoration-item">🍼</span>
-      <span class="decoration-item">🧸</span>
-      <span class="decoration-item">👶</span>
-      <span class="decoration-item">🍼</span>
-    </div>
-  </header>
-
-  <div class="products-grid">
-    <!-- Products will be dynamically inserted here -->
-  </div>
-</div>
-
-<!-- Recently Purchased Hotbar -->
-<div class="recently-purchased-hotbar" aria-label="Recently purchased items">
-  <h2>Purchased Items:</h2>
-  <ul id="recentList" aria-live="polite" aria-atomic="true">
-    <li>No recent purchases.</li>
-  </ul>
-</div>
-
-<!-- Confirmation Modal -->
-<div class="modal-overlay" id="modalOverlay" style="display:none;">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <h2 id="modalTitle">Confirm Purchase</h2>
-    <p id="confirmation-msg">Are you sure you want to mark this item as purchased?</p>
-    <div class="modal-buttons">
-      <button class="modal-button yes" id="confirmYes">Yes</button>
-      <button class="modal-button no" id="confirmNo">No</button>
-    </div>
-  </div>
-</div>
-
-<!-- Loading Overlay -->
-<div id="loadingOverlay" aria-live="assertive" aria-label="Loading">
-  <div class="spinner"></div>
-</div>
-
-<script>
-  const modalOverlay = document.getElementById("modalOverlay");
-  const modalTitle = document.getElementById("modalTitle")
-  const confirmationMsg = document.getElementById("confirmation-msg")
-  const confirmYes = document.getElementById("confirmYes");
-  const confirmNo = document.getElementById("confirmNo");
-  const recentList = document.getElementById("recentList");
-  const loadingOverlay = document.getElementById("loadingOverlay");
-  const RECENT_STORAGE_KEY = "recentlyPurchasedItems";
-
-  let currentCard = null;
-  const baseUrl = `https://script.google.com/macros/s/AKfycbyBG4ROOZ6M28fILsq9f0i3f_9wRtv5zOGLFF4DwcUhp_Qu4pEnC5KGFAoc2SstDcRYUA/exec`;
-
-  // Show loading spinner
-  function showLoading() {
-    loadingOverlay.classList.add("active");
-  }
-
-  // Hide loading spinner
-  function hideLoading() {
-    loadingOverlay.classList.remove("active");
-  }
-
-  async function fetchItems(showLoad) {
-    if (showLoad == true){
-        showLoading();
-
-    } else {
-        hideLoading();
-    }
     
-    try {
-      const res = await fetch(baseUrl);
-      const data = await res.json();
-      return data.items || [];
-    } catch (err) {
-      console.error(err);
-      alert("Failed to fetch items.");
-      return [];
-    } finally {
-      hideLoading();
-    }
-  }
-
-  async function incrementPurchased(itemId) {
-    showLoading();
-    try {
-      const res = await fetch(`${baseUrl}?itemId=${itemId}&action=increment`);
-      return await res.json();
-    } catch (err) {
-      console.error(err);
-      alert('Error: ' + err.message);
-      return null;
-    } finally {
-      hideLoading();
-    }
-  }
-
-  async function decrementPurchased(itemId) {
-    showLoading();
-    try {
-      const res = await fetch(`${baseUrl}?itemId=${itemId}&action=decrement`);
-      return await res.json();
-    } catch (err) {
-      console.error(err);
-      alert('Error: ' + err.message);
-      return null;
-    } finally {
-      hideLoading();
-    }
-  }
-
-  function renderItemCard(item) {
-  const purchased = Number(item.Purchased);
-  const needed = Number(item.Needed);
-  const remaining = Math.max(needed - purchased, 0);
-  const disabled = purchased >= needed ? "purchased" : "";
-
-  const percent = needed > 0 ? Math.min((purchased / needed) * 100, 100) : 0;
-
-  return `
-    <div class="product-card ${disabled}" data-id="${item.ID}">
-      <div class="product-image">
-        <img src="${item.Image || 'images/placeholder.jpg'}" alt="${item.Name}" />
-      </div>
-      <button class="buy-button" title="Buy this item" ${disabled ? "disabled" : ""}>Buy</button>
-      <div class="product-content">
-        <h3 class="product-title">${item.Name}</h3>
-        <p class="product-quantity">Need: ${remaining}</p>
-        <div class="product-progress" aria-label="Progress for ${item.Name}">
-          <div class="product-progress-bar" style="width: ${percent}%"></div>
+    <div class="container">
+      <header>
+        <h1>Baby Z's Gift Registry</h1>
+        <p class="subtitle">Help us welcome our little one with these special gifts!</p>
+        <div class="header-decoration">
+          <span class="decoration-item">👶</span>
+          <span class="decoration-item">🍼</span>
+          <span class="decoration-item">🧸</span>
+          <span class="decoration-item">👶</span>
+          <span class="decoration-item">🍼</span>
         </div>
-        <a href="${item.Link}" class="shop-button" target="_blank">Shop Now</a>
+      </header>
+
+      <div class="products-grid">
+        <!-- Products will be dynamically inserted here -->
       </div>
     </div>
-  `;
-}
 
+    <!-- Recently Purchased Hotbar -->
+    <div class="recently-purchased-hotbar" aria-label="Recently purchased items">
+      <h2>Purchased Items:</h2>
+      <ul id="recentList" aria-live="polite" aria-atomic="true">
+        <li>No recent purchases.</li>
+      </ul>
+    </div>
 
-  async function initialize(showLoad) {
-    const grid = document.querySelector(".products-grid");
-    const items = await fetchItems(showLoad);
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="modalOverlay" style="display:none;">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <h2 id="modalTitle">Confirm Purchase</h2>
+        <p id="confirmation-msg">Are you sure you want to mark this item as purchased?</p>
+        <div class="modal-buttons">
+          <button class="modal-button yes" id="confirmYes">Yes</button>
+          <button class="modal-button no" id="confirmNo">No</button>
+        </div>
+      </div>
+    </div>
 
-    if (!items.length) {
-      grid.innerHTML = "<p>No items found.</p>";
-      return;
-    }
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" aria-live="assertive" aria-label="Loading">
+      <div class="spinner"></div>
+    </div>
 
-    grid.innerHTML = items.map(renderItemCard).join("");
-
-    document.querySelectorAll(".buy-button").forEach(button => {
-      button.addEventListener("click", (e) => {
-        e.preventDefault();
-        const card = e.target.closest(".product-card");
-        if (!card || card.classList.contains("purchased")) return;
-
-        currentCard = card;
-        modalOverlay.style.display = "flex";
-      });
-    });
-
-    renderRecentlyPurchased();
-  }
-
-  // LocalStorage helpers for recently purchased
-
-  function addToRecentlyPurchased(item) {
-    let recentItems = JSON.parse(localStorage.getItem(RECENT_STORAGE_KEY)) || [];
-    recentItems.unshift(item);  // Add newest at front
-    if (recentItems.length > 10) recentItems.pop(); // Limit list size
-    localStorage.setItem(RECENT_STORAGE_KEY, JSON.stringify(recentItems));
-    renderRecentlyPurchased();
-  }
-
-  function removeFromRecentlyPurchased(itemId) {
-    let recentItems = JSON.parse(localStorage.getItem(RECENT_STORAGE_KEY)) || [];
-    const index = recentItems.findIndex(i => i.ID === itemId);
-    if (index !== -1) {
-      recentItems.splice(index, 1); // Remove only one purchase entry at index
-    }
-    localStorage.setItem(RECENT_STORAGE_KEY, JSON.stringify(recentItems));
-    renderRecentlyPurchased();
-  }
-
-  function renderRecentlyPurchased() {
-    const recentItems = JSON.parse(localStorage.getItem(RECENT_STORAGE_KEY)) || [];
-    if (!recentList) return;
-
-    if (recentItems.length === 0) {
-      recentList.innerHTML = "<li>No recent purchases.</li>";
-      return;
-    }
-
-    recentList.innerHTML = recentItems.map(item => `
-      <li data-id="${item.ID}" title="${item.Name}">
-        <img src="${item.Image || 'images/placeholder.jpg'}" alt="${item.Name}" />
-        <button class="decrement-btn" aria-label="Undo purchase of ${item.Name}">&times;</button>
-      </li>
-    `).join("");
-
-    document.querySelectorAll(".decrement-btn").forEach(btn => {
-      btn.onclick = async () => {
-        const li = btn.closest("li");
-        const id = li.dataset.id;
-        btn.disabled = true;
-        const result = await decrementPurchased(id);
-        btn.disabled = false;
-
-        if (result && result.status === "success") {
-          removeFromRecentlyPurchased(id);
-          await initialize(true);
-        } else {
-          alert(result?.message || "Could not undo purchase. Try again later.");
-        }
-      };
-    });
-  }
-
-  // Confirm modal button handlers
-
-  confirmYes.addEventListener("click", async () => {
-  if (!currentCard) return;
-
-  // Save original content
-  const originalTitle = modalTitle.textContent;
-  const originalMsg = confirmationMsg.textContent;
-  const originalYes = confirmYes.textContent;
-  const originalNo = confirmNo.textContent;
-
-  // Disable and visually gray out the buttons
-  confirmYes.disabled = true;
-  confirmNo.disabled = true;
-  confirmYes.classList.add("disabled");
-  confirmNo.classList.add("disabled");
-
-  // Update modal message and button text
-  modalTitle.textContent = "Confirming purchase";
-  confirmationMsg.textContent = "Please wait...";
-  confirmYes.textContent = "Processing...";
-  confirmNo.textContent = "";
-
-  const id = currentCard.dataset.id;
-  const result = await incrementPurchased(id);
-
-  if (result && result.status === "success") {
-    addToRecentlyPurchased(result.item || {
-      ID: id,
-      Name: currentCard.querySelector(".product-title").textContent,
-      Image: currentCard.querySelector("img")?.src || 'images/placeholder.jpg'
-    });
-    await initialize(true);
-  } else {
-    alert(result?.message || "Could not update purchase. Try again later.");
-  }
-
-  
-  // Restore modal to original state
-  // Show "Thank you!" before closing modal
-confirmationMsg.textContent = "Thank you!";
-modalTitle.textContent = "Success!";
-confirmYes.textContent = "";
-confirmNo.textContent = "";
-
-setTimeout(() => {
-  // Restore modal to original state
-  confirmationMsg.textContent = originalMsg;
-  modalTitle.textContent = originalTitle;
-  confirmYes.textContent = originalYes;
-  confirmNo.textContent = originalNo;
-  confirmYes.disabled = false;
-  confirmNo.disabled = false;
-  confirmYes.classList.remove("disabled");
-  confirmNo.classList.remove("disabled");
-
-  modalOverlay.style.display = "none";
-  currentCard = null;
-}, 2000); // delay in milliseconds
-});
-
-
-  confirmNo.addEventListener("click", () => {
-    modalOverlay.style.display = "none";
-    currentCard = null;
-  });
-
-  modalOverlay.addEventListener("click", (e) => {
-    if (e.target === modalOverlay) {
-      modalOverlay.style.display = "none";
-      currentCard = null;
-    }
-  });
-
-  document.addEventListener("DOMContentLoaded", initialize(true));
-</script>
-
-<script>
-     document.addEventListener('DOMContentLoaded', function() {
-            // Back to top button functionality
-            const backToTopButton = document.getElementById('backToTop');
-            
-            window.addEventListener('scroll', function() {
-                if (window.pageYOffset > 300) {
-                    backToTopButton.classList.add('visible');
-                } else {
-                    backToTopButton.classList.remove('visible');
-                }
-            });
-            
-            backToTopButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
-        });
-        // Refresh data every 60 seconds (60000 milliseconds)
-setInterval(() => {
-  initialize(false);
-}, 60000);
-
-    </script>
-    
+<script src="main.js"></script>
+<script src="backToTop.js"></script>
 </body>
 </html>
